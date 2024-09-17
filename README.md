@@ -27,7 +27,9 @@ MerkleChallenger: The MerkleChallenger ensures the MerklePoster has posted accur
 
 ##### User flow: 
 1. User to deposit assets alongside their desired strategy (opt-in to someone else or build their own) into MasterVault. 
-2. User will automatically get rebalanced by the MerklePoster. 
+2. User will automatically get rebalanced by the MerklePoster.
+
+<img width="675" alt="Screenshot 2024-09-17 at 2 27 41 PM" src="https://github.com/user-attachments/assets/a4915c54-a27a-456f-b432-0c3355605b2c">
 
 ##### Benefits
 1. Capital efficiency: the MasterVault is establishing limit orders across all markets, meaning capital can move seamlessly between markets to earn the highest yield. 
