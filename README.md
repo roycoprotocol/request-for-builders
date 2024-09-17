@@ -8,23 +8,25 @@ Anyone and everyone is invited to contribute to this repo.
 
 ### Background
 
-Most onchain users are looking to earn yield. Some of them are super active, constantly rebalancing and assessing the risks of each new farm. Whereas others, are super passive and haven't opened their wallet in months. With the invention of Royco, there is now a shared standard for all different yield-earning activities. However, it requires active management, even moreso when it comes to things like valuing points.
+Most on-chain users are looking to earn yield on their assets. Some are highly active, constantly rebalancing and assessing the risks of each new yield opportunity. Others are passive, rarely interacting with their wallets. With the advent of Royco, there is now a shared standard for various yield-earning activities. However, maximizing returns still requires active management, especially when it comes to valuing points and navigating different incentive structures.
 
-Below, we propose a solution that enables anyone to construct their own yield strategy, or opt-in to a pre-defined one. This solution is completely decentralized, and serves both passive and active users.
+We propose a solution that enables anyone to construct their own yield strategy or opt into a predefined one. This solution is entirely decentralized and serves both passive and active users.
 
 
 ### How
 
 #### Key components: 
 
-StrategyAdmin: A smart contract that anyone can interact with. Anyone can create a Strategy by selecting a list of IAMs they want to be allocated to. When creating a Strategy, it is also possible to set up an "Owner" who has the ability to modify the list of IAMs. Initially, strategies will only optimize for yield but it's possible to specify more complex strategies here in the future.
+StrategyAdmin: A smart contract that allows users to create and manage custom strategies. Users can select a list of Incentive Action Markets (IAMs) they want to allocate to. When creating a strategy, users can specify an "Owner" who has the ability to modify the list of IAMs. Initially, strategies will focus on optimizing for yield but can be extended to include more complex strategies in the future.
 
-MasterVault: The MasterVault contains all user assets in a single vault and is in charge of rebalancing. The MasterVault receives instructions on how to rebalance and who has earned what yield from the MerkleChallenger. Additionally, when the MasterVault is currently allocated into a IAM within a strategy, it establishes limit orders on the remaining IAMs at a higher yield. 
+MasterVault: The MasterVault holds all user assets in a single vault and is responsible for rebalancing according to the chosen strategies. It interacts directly with Royco's ERC4626i vaults and uses the Royco Protocol's standard interfaces for deposits, withdrawals, and rewards management.
 
-MerklePoster: The MerklePoster calculates the appropriate rebalances, and yield and posts it onchain as a merkle root. 
+MerklePoster: The MerklePoster calculates the appropriate rebalances and yield distributions and posts this information on-chain as a Merkle root. This component uses off-chain computation to optimize strategies and leverages Royco's orderbooks for efficient execution.
 
-MerkleChallenger: The MerkleChallenger ensures the MerklePoster has posted accurate data. This means there will be a verification delay. This can powered by a decentralized network of nodes, or an EigenLayer AVS.
+MerkleChallenger: The MerkleChallenger ensures that the data posted by the MerklePoster is accurate. It provides a verification layer that allows actors to challenge incorrect data. This process can be powered by a decentralized network of nodes or an EigenLayer Active Validator Set (AVS). It interacts with Royco's smart contracts to enforce challenges and corrections.
 
+
+<<<<<<< Updated upstream
 #### User flow: 
 1. User to deposit assets alongside their desired strategy (opt-in to someone else or build their own) into MasterVault. 
 2. User will automatically get rebalanced by the MerklePoster.
@@ -35,25 +37,46 @@ MerkleChallenger: The MerkleChallenger ensures the MerklePoster has posted accur
 1. Capital efficiency: the MasterVault is establishing limit orders across all IAMs, meaning capital can move seamlessly between IAMs to earn the highest yield. 
 2. Minimized attack surface: the rebalances being verified allow actors to ensure that funds aren't being drained. 
 3. Gas efficiency: since all assets are inside the MasterVault, a coincidence of wants may enable a user to save money on gas by just swapping who owns each position. 
+=======
+##### User flow: 
+1. Deposit Assets: Users deposit assets into the MasterVault, specifying their desired strategy (either opting into an existing one or creating their own). The MasterVault uses Royco's ERC4626i vault interface for asset management.
+2. Automated Rebalancing: The MerklePoster calculates optimal rebalancing actions based on data from Royco's orderbooks (VaultOrderbook and RecipeOrderbook). It posts a Merkle root on-chain containing the rebalancing instructions.
+3. Verification and Execution: The MerkleChallenger verifies the Merkle root. Upon successful verification, the MasterVault executes the rebalances by interacting with the relevant IAMs through Royco's standard interfaces.
+4. Yield Distribution: Users receive yield based on their allocations and the performance of their chosen strategies. The rewards are managed using Royco's reward distribution mechanisms within the ERC4626i vaults.
+
+<img width="675" alt="Screenshot 2024-09-17 at 2 27 41 PM" src="https://github.com/user-attachments/assets/a4915c54-a27a-456f-b432-0c3355605b2c">
+
+##### Benefits
+1. Capital Efficiency: The MasterVault establishes limit orders across all IAMs using Royco's orderbooks, allowing capital to move seamlessly between markets to earn the highest yield.
+2. Minimized Attack Surface: The verification process ensures that rebalances and yield distributions are accurate, protecting user funds from malicious actions. This leverages Royco's built-in security features and the transparency of on-chain data.
+3. Gas Efficiency: By aggregating assets within the MasterVault, users can benefit from reduced gas costs due to economies of scale and potential netting of transactions. Interacting directly with Royco's optimized contracts further enhances gas efficiency.
+>>>>>>> Stashed changes
 
 Note: 0xngmi has also written about a similar implementation here: https://gist.github.com/0xngmi/653aa70d3162f0ef4a41d56ced602a6c 
 
 
 ## 2. Decentralized market making
 
+<<<<<<< Updated upstream
 ### Background
 The current methods for attracting liquidity are crude. When onchain, the only option is MasterChef which leaves no room for optimization. Whereas offchain, there are various venues but they preclude absolute competition and only support CEXs. The ideal solution is entirely onchain and runs an extremely competitive offering. 
+=======
+#### Background
+Current methods for attracting liquidity are suboptimal. On-chain options like MasterChef contracts lack flexibility and optimization. Off-chain venues often preclude absolute competition and primarily support centralized exchanges (CEXs). An ideal solution is entirely on-chain and offers a highly competitive environment for liquidity providers and token projects.
+>>>>>>> Stashed changes
 
 ### How 
 
-Build a factory that allows for IAMs with a singular action: LP on ExchangeX. 
-
-Allow token projects and market makers to bid in realtime for folks to provide that liquidity. 
+Build a factory that allows for the creation of IAMs with a singular action: providing liquidity on a specific decentralized exchange (DEX), such as Uniswap or SushiSwap. This factory leverages Royco's protocol to standardize incentive mechanisms and interactions. Allow token projects and market makers to bid in realtime for folks to provide that liquidity. 
 
 This should result in maximum participation for participants and the cheapest price for token projects. 
 
+<<<<<<< Updated upstream
 
 ## 3. Unstoppable interface
+=======
+### 3. Unstoppable interface
+>>>>>>> Stashed changes
 
 ### Background 
 
